@@ -19,6 +19,15 @@ export class InventoryPage {
 
   async goto() { await this.page.goto('/inventory.html'); }
 
+  async sortBy(option: 'az' | 'za' | 'lohi' | 'hilo') {
+    await this.page.getByTestId('product-sort-container').selectOption(option);
+  }
+
+  async getPrices(): Promise<number[]> {
+    const texts = await this.page.getByTestId('inventory-item-price').allTextContents();
+    return texts.map((t) => Number(t.replace('$', '')));
+  }
+
   /** Returns the product card whose title matches `name`. */
   item(name: string): Locator {
     return this.items.filter({
