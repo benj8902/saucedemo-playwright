@@ -35,6 +35,11 @@ test.describe('Login', () => {
     await loginPage.login('', '');
     await expect(loginPage.error).toContainText('Username is required');
   });
+
+  test('wrong password gives an error', async ({ page }) => {
+    await loginPage.login(STANDARD_USER, 'wrong_password');
+    await expect(loginPage.error).toContainText('Username and password do not match');
+  });
 });
 
 

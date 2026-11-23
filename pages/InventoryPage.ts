@@ -24,7 +24,9 @@ export class InventoryPage {
   }
 
   async getPrices(): Promise<number[]> {
-    const texts = await this.page.getByTestId('inventory-item-price').allTextContents();
+    const prices = this.page.getByTestId('inventory-item-price');
+    await expect(prices.first()).toBeVisible();
+    const texts = await prices.allTextContents();
     return texts.map((t) => Number(t.replace('$', '')));
   }
 
